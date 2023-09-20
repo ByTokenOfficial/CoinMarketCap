@@ -13,6 +13,7 @@ if __name__ == '__main__':
     minor_rank = 100
     major_weight = 0.5
     minor_weight = 1 - major_weight
+    timezone = 'Asia/Taipei'
     category = '604f2753ebccdd50cd175fc1' # stablecoin
     base_url = 'https://pro-api.coinmarketcap.com/'
     api_key = 'YOUR_API_KEY'
@@ -118,12 +119,12 @@ if __name__ == '__main__':
         previous_all_result_json = client.get_ohlcv_historical(id=all_ids, count=25)
         previous_timestamp, previous_id_price_dict = data_processor.process_previous_close(json_result=previous_all_result_json)
         # UTC -> UTC+8
-        previous_timestamp = convert_timezone(t=previous_timestamp)
+        previous_timestamp = convert_timezone(t=previous_timestamp, timezone=timezone)
 
         # 獲取最近一根K棒的收盤價
         lastest_all_result_json = client.update_ohlcv_lastest(id=all_ids)
         lastest_timestamp, lastest_id_price_dict = data_processor.process_lastest_close(json_result=lastest_all_result_json)
-        lastest_timestamp = convert_timezone(t=lastest_timestamp)
+        lastest_timestamp = convert_timezone(t=lastest_timestamp, timezone=timezone)
         
         # 計算24小時漲跌百分比
         pct_change_dict = cal_pct_change(prev_price_dict=previous_id_price_dict,
