@@ -1,1 +1,4 @@
 *.json
+.env
+utils/__pycache__
+apis/__pycache__

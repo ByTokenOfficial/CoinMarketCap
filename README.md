@@ -8,7 +8,8 @@
 ### 依賴包安裝
 ```pip install -r requirements.txt``` 或 ```pip3 install -r requirements.txt```
 ### Google Sheet 權限設定
-- 參考[此篇教程](https://www.learncodewithmike.com/2020/08/python-write-to-google-sheet.html)。
+- 取得googlesheetAPI金鑰/憑證參考[此篇教程](https://medium.com/%E8%BB%9F%E9%AB%94%E9%96%8B%E7%99%BC/%E6%8B%BF-google-%E6%86%91%E8%AD%89-api-e92d87cb42af)
+- 取得GoogleSheet ID參考[此篇教程](https://www.learncodewithmike.com/2020/08/python-write-to-google-sheet.html)。
 - 將金鑰下載並放置於專案根目錄下。
 ### 程式碼說明
 #### **apis/APIClient.py**
@@ -30,6 +31,7 @@
 - 用於將 UTC 時間轉換為指定時區時間的函數，此處用於將 CoinMarketCap APIs 回傳的時間轉換為台北時間（UTC +8）。
 #### **group_score_cron.py**
 - 主程式，設計為搭配 Linux 系統中的 crontab 排程進行使用。
+- 第一次執行前，須先在GoogleSheet上，手動建立major, minor, total_score, stats_major, stats_minor等5個分頁。
 - 第一次執行時，會將大小幣 ID 寫入 JSON 檔案，並將 Header 寫入 Google Sheet 試算表。
 - 之後每次執行時，會讀取大小幣 ID 的 JSON 檔，並將大小幣價格資料以及分數分布寫入 Google Sheet 試算表。
 ### Linux 排程設定

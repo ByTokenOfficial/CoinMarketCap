@@ -5,9 +5,14 @@ from utils.TimeConverter import convert_timezone
 from utils.ScoreCalculator import *
 from utils.GenerateDataframe import *
 from utils.IDList import *
+from dotenv import load_dotenv
+import os
 
 
 if __name__ == '__main__':
+    # 讀取.env
+    load_dotenv()
+    
     # 初始化參數
     major_rank = 20
     minor_rank = 100
@@ -16,12 +21,12 @@ if __name__ == '__main__':
     timezone = 'Asia/Taipei'
     category = '604f2753ebccdd50cd175fc1' # stablecoin
     base_url = 'https://pro-api.coinmarketcap.com/'
-    api_key = 'YOUR_API_KEY'
+    api_key = os.getenv("X-CMC_PRO_API_KEY")
 
     # Google Sheet 設置
     scopes = ['https://www.googleapis.com/auth/spreadsheets']
-    cred_path = 'CREDENTIAL_PATH'
-    spreadsheet_id = 'SPREADSHEET_ID'
+    cred_path = '/Users/gsgitlt008/Documents/projects/CoinMarketCap/marketheat-aee8eaf21745.json'
+    spreadsheet_id =  os.getenv("SPREADSHEET_ID")
     major_sheet = 'major'
     minor_sheet = 'minor'
     total_score_sheet = 'total_score'
