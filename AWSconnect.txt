@@ -1,0 +1,4 @@
+ssh -i "/Users/gsgitlt008/Documents/projects/AWSKey/ByTokenAWS1st.pem" ubuntu@ec2-18-204-194-71.compute-1.amazonaws.com
+chmod 400 /Users/gsgitlt008/Documents/projects/AWSKey/ByTokenAWS1st.pem
+
+scp -i /Users/gsgitlt008/Documents/projects/AWSKey/ByTokenAWS1st.pem -r /Users/gsgitlt008/Documents/projects/CoinMarketCap ubuntu@ec2-18-204-194-71.compute-1.amazonaws.com:/home/ubuntu/projects
