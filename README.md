@@ -34,8 +34,12 @@
 - 第一次執行前，須先在GoogleSheet上，手動建立major, minor, total_score, stats_major, stats_minor等5個分頁。
 - 第一次執行時，會將大小幣 ID 寫入 JSON 檔案，並將 Header 寫入 Google Sheet 試算表。
 - 之後每次執行時，會讀取大小幣 ID 的 JSON 檔，並將大小幣價格資料以及分數分布寫入 Google Sheet 試算表。
+#### **newcoin20.py**
+- 獲取新幣24小時交易量前10名幣種。
+- 取得前10名幣種歷史交易OHLCV數據
+- 可於DataProcess.process_listing_new調整chain和幣種數量
 ### Linux 排程設定
 - 編輯排程。 \
 ```crontab -e```
 - 設定每10分鐘執行一次。 \
-```10 * * * * [Python解釋器絕對路徑] [group_score_cron.py絕對路徑] >> [正常輸出log檔的絕對路徑] 2>> [錯誤輸出log檔的絕對路徑] &```
+```*/10 * * * * cd [CoinmarketCap資料夾路徑] && [Python解釋器絕對路徑] [欲執行的主程式.py] >> [正常輸出log檔的絕對路徑] 2>> [錯誤輸出log檔的絕對路徑] &```
