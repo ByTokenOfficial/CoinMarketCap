@@ -34,7 +34,7 @@
 - 第一次執行前，須先在GoogleSheet上，手動建立major, minor, total_score, stats_major, stats_minor等5個分頁。
 - 第一次執行時，會將大小幣 ID 寫入 JSON 檔案，並將 Header 寫入 Google Sheet 試算表。
 - 之後每次執行時，會讀取大小幣 ID 的 JSON 檔，並將大小幣價格資料以及分數分布寫入 Google Sheet 試算表。
-#### **newcoin20.py**
+#### **newcoin10.py**
 - 獲取新幣24小時交易量前10名幣種。
 - 取得前10名幣種歷史交易OHLCV數據
 - 可於DataProcess.process_listing_new調整chain和幣種數量
