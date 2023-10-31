@@ -6,6 +6,7 @@ class DataProcess:
         pass
     
     def check_input(self, json_result):
+        
         if json_result['status']['error_code'] != 0:
             error_message = json_result['status']['error_message']
             return False

@@ -8,8 +8,8 @@ class GoogleSheetHandler:
         client = gspread.authorize(credentials)
         self.spreadsheet = client.open_by_key(spreadsheet_id)
     
-    def append_row(self, worksheet, header):
-        worksheet.append_row(header)
+    def append_row(self, worksheet, _list):
+        worksheet.append_row(_list)
 
     def append_rows(self, worksheet, df):
         for row in range(df.shape[0]):

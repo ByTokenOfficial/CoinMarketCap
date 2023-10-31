@@ -5,6 +5,8 @@ import os
 from pathlib import Path
 from dotenv import load_dotenv
 env_path = os.path.join(Path("."), ".env")
+from datetime import datetime
+import pytz
 
 def save_ohlcv_historical(df_list, option='s'):
     for l in df_list:
@@ -19,6 +21,7 @@ def save_ohlcv_historical(df_list, option='s'):
 def update_id_list():
     listing_new_json = client.get_listing_new(limit=200)
     id_list = data_processor.process_listing_new(listing_new_json)
+    # print('ranking: ', id_list)
     return id_list
 
 if __name__ == '__main__':
@@ -27,7 +30,12 @@ if __name__ == '__main__':
 
     # 初始化相關類別
     print('===== Initializing Parameters ==============')
-    dir_path = '/ethereum_newcoin'
+    # dir_path = '/data/2023-10-16_17-52'
+    taipei_timezone = pytz.timezone("Asia/Taipei")
+    save_time = datetime.now(taipei_timezone)
+    save_time_format = save_time.strftime("%Y-%m-%d_%H-%M")
+    dir_path = f'/data/{save_time_format}'
+
     file_handler = FileHandler(dir_path=dir_path)
     base_url = 'https://pro-api.coinmarketcap.com/'
     api_key = os.getenv("X-CMC_PRO_API_KEY")
@@ -49,3 +57,4 @@ if __name__ == '__main__':
     # 歷史數據儲存到CSV檔案
     print('===== Saving the OHLCV Historical Data =====')
     save_ohlcv_historical(df_list)
+

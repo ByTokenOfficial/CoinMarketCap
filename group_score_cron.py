@@ -85,6 +85,7 @@ if __name__ == '__main__':
         # 產生標頭 Dataframe
         token_col = ['Data']
         major_header = token_col + major_header
+        print("\nmajor_header", major_header)
         minor_header = token_col + minor_header
         
         timestamp_header = ['Timestamp']
