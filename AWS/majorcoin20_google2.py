@@ -11,13 +11,6 @@ import os
 from datetime import datetime
 import pytz
 
-import logging
-
-# 設定日誌文件的名稱和格式
-log_file = 'output.log'
-logging.basicConfig(filename=log_file, level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
-
-
 
 if __name__ == '__main__':
     # 讀取.env
@@ -35,7 +28,7 @@ if __name__ == '__main__':
 
     # Google Sheet 設置
     scopes = ['https://www.googleapis.com/auth/spreadsheets']
-    cred_path = '/Users/gsgitlt008/Documents/projects/CoinMarketCap/marketheat-aee8eaf21745.json'
+    cred_path = r'/home/ubuntu/projects/Majorcoin20/CoinMarketCap/marketheat-aee8eaf21745.json'
     spreadsheet_id =  os.getenv("MAJORCOIN_SPREADSHEET_ID")
     major_sheet = 'major'
 
@@ -43,6 +36,7 @@ if __name__ == '__main__':
     major_info_list_path = 'major_info.json'
     # minor_info_list_path = 'minor_info.json'
     filter_id_list_path = 'filter_id_list.json'
+
 
     # 實例化
     client = APIClient(base_url=base_url, api_key=api_key)
@@ -104,7 +98,6 @@ if __name__ == '__main__':
         # 將 Dataframe 寫入 Google Sheet
         googlesheet_handler.append_row(worksheet=worksheet_major, _list=major_header)
 
-
     else:
         # 獲取major tokens的slug，append 到major sheet
         major_slug_list = [token[3] for token in major_tokens] 
@@ -120,15 +113,4 @@ if __name__ == '__main__':
         print("\ntime_slug_list", time_slug_list)
 
         # time_slug_list寫入googlesheet
-        # googlesheet_handler.append_row(worksheet=worksheet_major, _list=time_slug_list)
-
-# 將所有print改為logging.info
-logging.info("worksheet_major_header %s", worksheet_major_header)
-logging.info("result %s", result)
-logging.info("stablecoin_list %s", stablecoin_list)
-logging.info("filter_list %s", filter_list)
-logging.info("new_result %s", new_result)
-logging.info("major_tokens %s", major_tokens)
-logging.info("major_slug_list %s", major_slug_list)
-logging.info("taipei_time %s", taipei_time)
-logging.info("time_slug_list %s", time_slug_list)
+        googlesheet_handler.append_row(worksheet=worksheet_major, _list=time_slug_list)
