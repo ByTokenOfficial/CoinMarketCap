@@ -1,3 +1,5 @@
+import sys
+sys.path.append('/home/ubuntu/projects/Majorcoin20/CoinMarketCap')
 from apis.APIClient import APIClient
 from apis.DataProcess import DataProcess
 from utils.GoogleSheetHandler import GoogleSheetHandler
@@ -13,6 +15,9 @@ import pytz
 
 
 if __name__ == '__main__':
+    os.chdir('/home/ubuntu/projects/Majorcoin20/CoinMarketCap')
+    pwd = os.getcwd()
+    print(pwd)
     # 讀取.env
     load_dotenv()
     
@@ -59,7 +64,7 @@ if __name__ == '__main__':
     print("result", result)
 
     # 獲取所有穩定幣列表(第一次執行才會獲取穩定幣列表，之後從filter_id_list.json讀取)
-    if not filter_id_list_path:
+    if not os.path.isfile(filter_id_list_path):
         stablecoin_json = client.get_category_token(category_id=category)
         stablecoin_list = data_processor.process_category(json_result=stablecoin_json)
         print("\nstablecoin_list", stablecoin_list)
