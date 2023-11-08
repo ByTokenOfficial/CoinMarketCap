@@ -1,3 +1,5 @@
+import sys
+sys.path.append('/home/ubuntu/projects/Majorcoin20/CoinMarketCap')
 from utils.FileHandler import FileHandler
 from apis.APIClient import APIClient
 from apis.DataProcess import DataProcess
@@ -5,7 +7,7 @@ from utils.GoogleSheetHandler import GoogleSheetHandler
 import os
 from pathlib import Path
 from dotenv import load_dotenv
-env_path = os.path.join(Path("."), ".env")
+env_path = os.path.join(Path("../."), ".env")
 from datetime import datetime
 import pytz
 import json
@@ -69,7 +71,7 @@ if __name__ == '__main__':
     print('===== Pushing Data to Google Sheet =====')
     ### Google Sheet 設置
     scopes = ['https://www.googleapis.com/auth/spreadsheets']
-    cred_path = r'/home/ubuntu/projects/Newcoin/marketheat-aee8eaf21745.json'
+    cred_path = r'/home/ubuntu/projects/Majorcoin20/CoinMarketCap/marketheat-aee8eaf21745.json'
     spreadsheet_id =  os.getenv("NEWCOINSHEET_ID")
     hourly_rank_sheet = 'Hourly_Rank'
     ### 實例化
