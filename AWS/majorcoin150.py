@@ -41,7 +41,7 @@ if __name__ == '__main__':
 
     # Google Sheet 設置
     scopes = ['https://www.googleapis.com/auth/spreadsheets']
-    cred_path = '/Users/gsgitlt008/Documents/projects/CoinMarketCap/marketheat-aee8eaf21745.json'
+    cred_path = r'/home/ubuntu/projects/Majorcoin20/CoinMarketCap/marketheat-aee8eaf21745.json'
     spreadsheet_id =  os.getenv("MAJORCOIN_SPREADSHEET_ID")
     major_sheet = 'major'
     group2_sheet = '21to50'
