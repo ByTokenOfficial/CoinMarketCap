@@ -1,3 +1,5 @@
+import sys
+sys.path.append('/home/ubuntu/projects/150Majorcoin/CoinMarketCap')
 from apis.APIClient import APIClient
 from apis.DataProcess import DataProcess
 from utils.GoogleSheetHandler import GoogleSheetHandler
