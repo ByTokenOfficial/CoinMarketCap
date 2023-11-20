@@ -1,3 +1,5 @@
+import sys
+sys.path.append('/home/ubuntu/projects/Majorcoin20/CoinMarketCap')
 from apis.APIClient import APIClient
 from apis.DataProcess import DataProcess
 from utils.GoogleSheetHandler import GoogleSheetHandler
@@ -12,7 +14,11 @@ from datetime import datetime
 import pytz
 
 
+
 if __name__ == '__main__':
+    # 從AWS資料夾，改成從project目錄執行
+    os.chdir('/home/ubuntu/projects/Majorcoin20/CoinMarketCap')
+
     # 讀取.env
     load_dotenv()
     
@@ -59,26 +65,26 @@ if __name__ == '__main__':
     print("result", result)
 
     # 獲取所有穩定幣列表(第一次執行才會獲取穩定幣列表，之後從filter_id_list.json讀取)
-    if not filter_id_list_path:
+    if not os.path.isfile(filter_id_list_path):
         stablecoin_json = client.get_category_token(category_id=category)
         stablecoin_list = data_processor.process_category(json_result=stablecoin_json)
-        print("\nstablecoin_list", stablecoin_list)
+        print(r"\nstablecoin_list", stablecoin_list)
         WBTC_ID = [3717]
         filter_list = stablecoin_list + WBTC_ID
-        print("\nfilter_list", filter_list)
+        print(r"\nfilter_list", filter_list)
         save_id_list(filter_id_list_path, filter_list)
     else:
         filter_list = load_id_list(filter_id_list_path)
-        print("\nfilter_list", filter_list)
+        print(r"\nfilter_list", filter_list)
 
     # 過濾穩定幣=>排除穩定幣的lists
     new_result = data_processor.filter(l1=result, l2=filter_list)
-    print("\nnew_result", new_result)
+    print(r"\nnew_result", new_result)
 
 
     # 分組為大小幣(有序)
     major_tokens = new_result[:major_rank]
-    print("\nmajor_tokens", major_tokens)
+    print(r"\nmajor_tokens", major_tokens)
 
     # 讀取ID列表
     # major_id_list = [token[0] for token in major_tokens]  # 取得ID
@@ -101,16 +107,16 @@ if __name__ == '__main__':
     else:
         # 獲取major tokens的slug，append 到major sheet
         major_slug_list = [token[3] for token in major_tokens] 
-        print("\nmajor_slug_list", major_slug_list)
+        print(r"\nmajor_slug_list", major_slug_list)
 
         # 獲取現在時間UTC+8
         taipei_timezone = pytz.timezone("Asia/Taipei")
         taipei_time = datetime.now(taipei_timezone).strftime("%Y-%m-%d %H:%M:%S")
-        print("\ntaipei_time", taipei_time)
+        print(r"\ntaipei_time", taipei_time)
 
         # 合併slug_list + taipei_time
         time_slug_list = [taipei_time] + major_slug_list
-        print("\ntime_slug_list", time_slug_list)
+        print(r"\ntime_slug_list", time_slug_list)
 
         # time_slug_list寫入googlesheet
         googlesheet_handler.append_row(worksheet=worksheet_major, _list=time_slug_list)

@@ -65,7 +65,7 @@ if __name__ == '__main__':
     print("result", result)
 
     # 獲取所有穩定幣列表(第一次執行才會獲取穩定幣列表，之後從filter_id_list.json讀取)
-    if not filter_id_list_path:
+    if not os.path.isfile(filter_id_list_path):
         stablecoin_json = client.get_category_token(category_id=category)
         stablecoin_list = data_processor.process_category(json_result=stablecoin_json)
         print("\nstablecoin_list", stablecoin_list)
@@ -104,7 +104,6 @@ if __name__ == '__main__':
         # 將 Dataframe 寫入 Google Sheet
         googlesheet_handler.append_row(worksheet=worksheet_major, _list=major_header)
 
-
     else:
         # 獲取major tokens的slug，append 到major sheet
         major_slug_list = [token[3] for token in major_tokens] 
@@ -120,12 +119,12 @@ if __name__ == '__main__':
         print("\ntime_slug_list", time_slug_list)
 
         # time_slug_list寫入googlesheet
-        # googlesheet_handler.append_row(worksheet=worksheet_major, _list=time_slug_list)
+        googlesheet_handler.append_row(worksheet=worksheet_major, _list=time_slug_list)
 
 # 將所有print改為logging.info
 logging.info("worksheet_major_header %s", worksheet_major_header)
 logging.info("result %s", result)
-logging.info("stablecoin_list %s", stablecoin_list)
+# logging.info("stablecoin_list %s", stablecoin_list)
 logging.info("filter_list %s", filter_list)
 logging.info("new_result %s", new_result)
 logging.info("major_tokens %s", major_tokens)
