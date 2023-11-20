@@ -99,7 +99,8 @@ if __name__ == '__main__':
         stablecoin_list = data_processor.process_category(json_result=stablecoin_json)
         print("\nstablecoin_list", stablecoin_list)
         WBTC_ID = [3717]
-        filter_list = stablecoin_list + WBTC_ID
+        BUSD_ID = [4687]
+        filter_list = stablecoin_list + WBTC_ID + BUSD_ID
         print("\nfilter_list", filter_list)
         save_id_list(filter_id_list_path, filter_list)
     else:
