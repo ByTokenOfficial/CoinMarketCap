@@ -51,7 +51,6 @@ if __name__ == '__main__':
     move2place_sheet = 'move2place'
     move1place_sheet = 'move1place'
     new_entry = 'new_entry'
-    all150 = 'All150'
 
     # Major/Minor 資訊 JSON 檔名
     # major_info_list_path = 'major_info.json'
@@ -80,7 +79,6 @@ if __name__ == '__main__':
     worksheet_move2place = googlesheet_handler.spreadsheet.worksheet(move2place_sheet)
     worksheet_move1place = googlesheet_handler.spreadsheet.worksheet(move1place_sheet)
     worksheet_new_entry = googlesheet_handler.spreadsheet.worksheet(new_entry)
-    worksheet_all150 = googlesheet_handler.spreadsheet.worksheet(all150)
 
     # 讀取worksheet標頭
     worksheet_major_header = worksheet_major.row_values(1)
@@ -88,7 +86,6 @@ if __name__ == '__main__':
     worksheet_group2_header = worksheet_group2.row_values(1)
     worksheet_group3_header = worksheet_group3.row_values(1)
     worksheet_group4_header = worksheet_group4.row_values(1)
-    worksheet_all150_header = worksheet_all150.row_values(1)
 
     # 獲取所有代幣列表（1-150排名）
     id_map_json = client.get_id_map(limit=170) # 剛好返回150名
@@ -122,7 +119,6 @@ if __name__ == '__main__':
     print("\ngroup3_tokens", group3_tokens)
     group4_tokens = new_result[group3_rank:group4_rank]
     print("\ngroup4_tokens", group4_tokens)
-    all150_tokens = new_result
     move3place_list = []
     move2place_list = []
     move1place_list = []
@@ -133,16 +129,15 @@ if __name__ == '__main__':
     # print("\nmajor_id_list", major_id_list)
 
     # 判斷是否為第一次執行，是否存在表頭
-    worksheet_list = [worksheet_major, worksheet_group2, worksheet_group3, worksheet_group4, worksheet_all150]
-    worksheet_header_list = [worksheet_major_header, worksheet_group2_header, worksheet_group3_header, worksheet_group4_header, worksheet_all150_header]
+    worksheet_list = [worksheet_major, worksheet_group2, worksheet_group3, worksheet_group4]
+    worksheet_header_list = [worksheet_major_header, worksheet_group2_header, worksheet_group3_header, worksheet_group4_header]
     # 寫入Columes
     major_header = ['1st', '2nd','3rd','4th','5th','6th','7th','8th','9th','10th','11th','12th','13th','14th','15th','16th','17th','18th','19th','20th']
     group2_header = list(range(21,51))
     group3_header = list(range(51,101))
     group4_header = list(range(101,151))
-    all150_header = list(range(1,171))
     # 對應worksheet 的header list
-    corresponding_header_list = [major_header, group2_header, group3_header, group4_header, all150_header]
+    corresponding_header_list = [major_header, group2_header, group3_header, group4_header]
     token_col = ['UTC+8']
     for worksheet, worksheet_header, header in zip(worksheet_list, worksheet_header_list, corresponding_header_list):
         if not worksheet_header:
@@ -163,7 +158,6 @@ if __name__ == '__main__':
     print("\ngroup3_slug_list", group3_slug_list)
     group4_slug_list = [token[3] for token in group4_tokens]
     print("\ngroup4_slug_list", group4_slug_list)
-    all150_slug_list = [token[3] for token in new_result]
 
     # 獲取現在時間UTC+8
     taipei_timezone = pytz.timezone("Asia/Taipei")
@@ -176,14 +170,12 @@ if __name__ == '__main__':
     time_group2_slug_list = [taipei_time] + group2_slug_list
     time_group3_slug_list = [taipei_time] + group3_slug_list
     time_group4_slug_list = [taipei_time] + group4_slug_list
-    time_all150_slug_list = [taipei_time] + all150_slug_list
 
     # time_slug_list寫入googlesheet
     googlesheet_handler.append_row(worksheet=worksheet_major, _list=time_slug_list)
     googlesheet_handler.append_row(worksheet=worksheet_group2, _list=time_group2_slug_list)
     googlesheet_handler.append_row(worksheet=worksheet_group3, _list=time_group3_slug_list)
     googlesheet_handler.append_row(worksheet=worksheet_group4, _list=time_group4_slug_list)
-    googlesheet_handler.append_row(worksheet=worksheet_all150, _list=time_all150_slug_list)
     print("寫入google sheet排行完成！")
 
     # 判斷是否有前一次的group1,2,3,4的file，如果有任一沒有，就4個都存，然後跳出這次執行
